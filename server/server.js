@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const workoutRoutes = require('./routes/workoutRoutes');
 
 const app = express();
 
@@ -15,6 +16,7 @@ mongoose.connect(process.env.MONGO_URI)
 .catch(err => console.error(err));
 
 // Define a simple route
+app.use('/api', workoutRoutes);
 app.get('/', (req, res) => {
   res.send('Server is running');
 });

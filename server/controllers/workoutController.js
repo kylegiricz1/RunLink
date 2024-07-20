@@ -1,4 +1,4 @@
-const Workout = require("../models/workout")
+const Workout = require("../models/workout");
 
 const createWorkout = async () =>{
     const {distance,pace}= req.body;
@@ -10,3 +10,19 @@ const createWorkout = async () =>{
         res.status(400).json({ message: error.message });
       }
     };
+
+const getWorkouts = async (req, res) => {
+    try {
+        const workouts = await Workout.find();
+        res.status(200).json(workouts);
+       
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+        
+      }
+};
+
+module.exports = {
+    createWorkout,
+    getWorkouts
+  };
