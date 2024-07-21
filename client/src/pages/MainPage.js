@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import WorkoutForm from '../components/WorkoutForm';
-import WorkoutList from '../components/WorkoutList';
+import WorkoutForm from '../components/workoutForm';
+import WorkoutList from '../components/workoutList';
 
 const MainPage = () => {
   const [workouts, setWorkouts] = useState([]);
