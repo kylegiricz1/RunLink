@@ -21,7 +21,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <h1>Workout Tracker</h1>
+      <h1>RunLink</h1>
       <WorkoutForm onAddWorkout={handleAddWorkout} />
       <WorkoutList workouts={workouts} />
     </div>
