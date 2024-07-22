@@ -1,22 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
-const WorkoutList = () => {
-  const [workouts, setWorkouts] = useState([]);
-
-  useEffect(() => {
-    const fetchWorkouts = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/workouts');
-        if (!response.ok) throw new Error('Something went wrong!');
-        const data = await response.json();
-        setWorkouts(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchWorkouts();
-  }, []);
-
+const WorkoutList = ({ workouts }) => {
   return (
     <div>
       <h2>Workouts</h2>

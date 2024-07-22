@@ -1,6 +1,6 @@
 const Workout = require("../models/workout");
 
-const createWorkout = async () =>{
+const createWorkout = async (req, res) =>{
     const {distance,pace}= req.body;
     try {
         const newWorkout = new Workout({ distance, pace });
