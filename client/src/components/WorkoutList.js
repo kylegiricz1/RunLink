@@ -1,17 +1,17 @@
 import React from 'react';
 
-const WorkoutList = ({ workouts }) => {
+const WorkoutList = ({ workouts, onDeleteWorkout }) => {
   return (
     <>
       <h2>Workouts</h2>
       <ul>
         {workouts.map((workout) => (
-          <>
-          <li key={workout._id}>
+          <React.Fragment key={workout._id}>
+          <li>
             Distance: {workout.distance} km, Pace: {workout.pace.minutes} min {workout.pace.seconds} sec
           </li>
-          <button>Delete Workout</button>
-          </>
+          <button onClick={() => onDeleteWorkout(workout._id)}>Delete Workout</button>
+          </React.Fragment>
         ))}
       </ul>
       
