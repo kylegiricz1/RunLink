@@ -1,9 +1,10 @@
 const Workout = require("../models/workout");
 
 const createWorkout = async (req, res) =>{
-    const {distance,pace}= req.body;
+    const {location,distance,pace,description}= req.body;
+    const date= new Date(req.body.date)
     try {
-        const newWorkout = new Workout({ distance, pace });
+        const newWorkout = new Workout({ location, date, distance, pace, description});
         await newWorkout.save();
         res.status(201).json(newWorkout);
       } catch (error) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/styles.css';
 
 const WorkoutList = ({ workouts, onDeleteWorkout }) => {
   return (
@@ -8,7 +9,8 @@ const WorkoutList = ({ workouts, onDeleteWorkout }) => {
         {workouts.map((workout) => (
           <React.Fragment key={workout._id}>
           <li>
-            Distance: {workout.distance} km, Pace: {workout.pace.minutes} min {workout.pace.seconds} sec
+            Location: {workout.location}, Date: {new Date(workout.date).toLocaleDateString()}, Distance: {workout.distance} km, Pace: {workout.pace.minutes} min {workout.pace.seconds} sec, 
+            Description: {workout.description}
           </li>
           <button onClick={() => onDeleteWorkout(workout._id)}>Delete Workout</button>
           </React.Fragment>

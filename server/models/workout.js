@@ -1,8 +1,17 @@
 const mongoose = require("mongoose");
 
 const workoutSchema = new mongoose.Schema({
+
+    location:{
+        type: String
+    },
+    date:{
+      type:Date,
+      required:true
+    },
     distance:{
-        type:Number
+        type:Number,
+        required: true
     },
     pace:{
         minutes: {
@@ -16,6 +25,9 @@ const workoutSchema = new mongoose.Schema({
             min: 0,
             max: 59
           }
+    },
+    description:{
+      type: String
     }
 })
 
