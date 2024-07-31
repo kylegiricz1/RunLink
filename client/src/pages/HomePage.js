@@ -1,38 +1,25 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/HomePage.js
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import WorkoutForm from '../components/WorkoutForm';
 import WorkoutList from '../components/WorkoutList';
-import { fetchWorkouts, deleteWorkout } from '../services/workoutService.js';
+import { fetchAllWorkouts } from '../features/workouts/workoutsSlice';
 
 const HomePage = () => {
-  const [workouts, setWorkouts] = useState([]);
+  const dispatch = useDispatch();
+  const workoutsStatus = useSelector((state) => state.workouts.status);
 
   useEffect(() => {
-    const getWorkouts = async () => {
-      const data = await fetchWorkouts();
-      setWorkouts(data);
-    };
-
-    getWorkouts();
-  }, []);
-
-  const handleAddWorkout = (newWorkout) => {
-    setWorkouts([...workouts, newWorkout]);
-  };
-
-  const handleDeleteWorkout = async (id) => {
-    try {
-      await deleteWorkout(id)
-      setWorkouts(workouts.filter(workout => workout._id !== id));
-    } catch (error) {
-      console.error('There was an error deleting the workout!', error);
+    if (workoutsStatus === 'idle') {
+      dispatch(fetchAllWorkouts());
     }
-  };
+  }, [workoutsStatus, dispatch]);
 
   return (
     <div>
       <h1>RunLink</h1>
-      <WorkoutForm onAddWorkout={handleAddWorkout} />
-      <WorkoutList workouts={workouts} onDeleteWorkout={handleDeleteWorkout}/>
+      <WorkoutForm/>
+      <WorkoutList />
     </div>
   );
 };

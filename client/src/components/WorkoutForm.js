@@ -1,93 +1,123 @@
+// src/components/WorkoutForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { createWorkout } from '../features/workouts/workoutsSlice';
 
-const WorkoutForm = ({ onAddWorkout }) => {
-  const [location, setLocation] = useState('');
-  const [date, setDate] = useState('');
-  const [distance, setDistance] = useState('');
-  const [minutes, setMinutes] = useState('');
-  const [seconds, setSeconds] = useState('');
-  const [description, setDescription] = useState('')
+import '../styles/styles.css'
 
-  const handleSubmit = async (e) => {
+const WorkoutForm = () => {
+  const dispatch = useDispatch();
+  const [formData, setFormData] = useState({
+    location: '',
+    date: '',
+    distance: '',
+    pace: { minutes: '', seconds: '' },
+    description: '',
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handlePaceChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      pace: {
+        ...prev.pace,
+        [name]: value,
+      },
+    }));
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/workouts', {
-        location,
-        date,
-        distance: Number(distance),
-        pace: {
-          minutes: Number(minutes),
-          seconds: Number(seconds)
-        },
-        description
-      });
-      onAddWorkout(response.data);
-      setLocation('');
-      setDate('');
-      setDistance('');
-      setMinutes('');
-      setSeconds('');
-      setDescription('');
-    } catch (error) {
-      console.error('There was an error adding the workout!', error);
-    }
+    // Dispatch the createWorkout action with formData
+    dispatch(createWorkout({ ...formData, pace: { ...formData.pace } }));
+    // Clear the form
+    setFormData({
+      location: '',
+      date: '',
+      distance: '',
+      pace: { minutes: '', seconds: '' },
+      description: '',
+    });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <label>Location:</label>
-        <input 
-          type='text'
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-        />
+        <label>
+          Location:
+          <input
+            type="text"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+            required
+          />
+        </label>
       </div>
       <div>
-        <label>Date:</label>
-        <input
-          type='date'
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          required
-        />
+        <label>
+          Date:
+          <input
+            type="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            required
+          />
+        </label>
       </div>
       <div>
-        <label>Distance: </label>
-        <input
-          type="number"
-          value={distance}
-          onChange={(e) => setDistance(e.target.value)}
-          required
-        />
+        <label>
+          Distance (km):
+          <input
+            type="number"
+            name="distance"
+            value={formData.distance}
+            onChange={handleChange}
+            required
+          />
+        </label>
       </div>
       <div>
-        <label>Minutes: </label>
-        <input
-          type="number"
-          value={minutes}
-          onChange={(e) => setMinutes(e.target.value)}
-          required
-        />
+        <label>
+          Pace (minutes):
+          <input
+            type="number"
+            name="minutes"
+            value={formData.pace.minutes}
+            onChange={handlePaceChange}
+            required
+          />
+        </label>
+        <label>
+          Pace (seconds):
+          <input
+            type="number"
+            name="seconds"
+            value={formData.pace.seconds}
+            onChange={handlePaceChange}
+            required
+          />
+        </label>
       </div>
       <div>
-        <label>Seconds: </label>
-        <input
-          type="number"
-          value={seconds}
-          onChange={(e) => setSeconds(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Description</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
+        <label>
+          Description:
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+          />
+        </label>
       </div>
       <button type="submit">Add Workout</button>
     </form>

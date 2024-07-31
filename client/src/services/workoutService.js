@@ -10,3 +10,8 @@ export const fetchWorkouts = async () => {
 export const deleteWorkout = async (id) => {
   await axios.delete(`${API_URL}/${id}`);
 };
+
+export const addWorkout = async (workout) => {
+  const response = await axios.post(API_URL, workout);
+  return response.data;
+};

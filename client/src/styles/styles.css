@@ -1,27 +1,10 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  .container {
+form {
     max-width: 600px;
     margin: 0 auto;
-    background-color: #fff;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1, h2 {
-    text-align: center;
-    color: #2a9d8f; /* Green */
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
   form div {
@@ -29,53 +12,92 @@ body {
   }
   
   label {
+    display: block;
     margin-bottom: 5px;
-    color: #264653; /* Dark Blue */
+    font-weight: bold;
+    color: #333;
   }
   
   input[type="text"],
   input[type="date"],
-  input[type="number"] {
+  input[type="number"],
+  textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
   }
   
-  button {
-    padding: 10px;
-    background-color: #e76f51; /* Brown */
-    color: #fff;
+  textarea {
+    height: 100px;
+  }
+  
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  button[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    font-size: 16px;
     cursor: pointer;
-    margin-top: 10px;
+    transition: background-color 0.3s ease;
   }
   
-  button:hover {
-    background-color: #d65a3a; /* Darker Brown */
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  input:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
   }
   
   ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
   }
   
   li {
-    background-color: #264653; /* Dark Blue */
-    color: #fff;
-    padding: 15px;
-    border-radius: 5px;
+    background-color: #f9f9f9;
     margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   
-  strong {
-    color: #2a9d8f; /* Green */
-  }
-  
-  hr {
+  button {
+    background-color: #ff4d4d;
+    color: white;
     border: none;
-    border-top: 1px solid #fff;
-    margin: 10px 0;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
+  button:hover {
+    background-color: #cc0000;
+  }
+    
