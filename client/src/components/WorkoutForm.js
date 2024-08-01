@@ -47,7 +47,7 @@ const WorkoutForm = () => {
       description: '',
     });
   };
-
+  
   return (
     <form onSubmit={handleSubmit}>
       <div>
