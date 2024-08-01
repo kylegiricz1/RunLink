@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const workoutSchema = new mongoose.Schema({
 
     location:{
-        type: Point
+        type: 'String'
     },
     date:{
       type:Date,
