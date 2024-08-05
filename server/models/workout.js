@@ -1,9 +1,24 @@
 const mongoose = require("mongoose");
 
-const workoutSchema = new mongoose.Schema({
 
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+});
+
+
+
+const workoutSchema = new mongoose.Schema({
     location:{
-        type: 'String'
+      type: pointSchema,
+      required: true,
     },
     date:{
       type:Date,

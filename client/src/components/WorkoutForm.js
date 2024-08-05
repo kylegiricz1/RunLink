@@ -1,14 +1,14 @@
-// src/components/WorkoutForm.js
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createWorkout } from '../features/workouts/workoutsSlice';
+import MapComponent from './MapComponent';
 
-import '../styles/styles.css'
+import '../styles/styles.css';
 
 const WorkoutForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
-    location: '',
+    location: [],
     date: '',
     distance: '',
     pace: { minutes: '', seconds: '' },
@@ -34,11 +34,17 @@ const WorkoutForm = () => {
     }));
   };
 
+  const handleLocationSelect = (location) => {
+    setFormData((prev) => ({
+      ...prev,
+      location,
+    }),
+  );
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dispatch the createWorkout action with formData
-    dispatch(createWorkout({ ...formData, pace: { ...formData.pace } }));
-    // Clear the form
+    dispatch(createWorkout(formData));
     setFormData({
       location: '',
       date: '',
@@ -47,19 +53,13 @@ const WorkoutForm = () => {
       description: '',
     });
   };
-  
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
         <label>
           Location:
-          <input
-            type="text"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            required
-          />
+          <MapComponent onLocationSelect={handleLocationSelect} />
         </label>
       </div>
       <div>

@@ -20,10 +20,11 @@ const WorkoutList = () => {
         {workouts.map((workout) => (
           <React.Fragment key={workout._id}>
             <li>
-              Location: {workout.location}, Date: {new Date(workout.date).toLocaleDateString()}, Distance: {workout.distance} km, Pace: {workout.pace.minutes} min {workout.pace.seconds} sec,
+              Location: LNG: {workout.location.coordinates[0]}, LAT: {workout.location.coordinates[1]},  Date: {new Date(workout.date).toLocaleDateString()}, Distance: {workout.distance} km, Pace: {workout.pace.minutes} min {workout.pace.seconds} sec,
               Description: {workout.description}
+              <button onClick={() => handleDeleteWorkout(workout._id)}>Delete Workout</button>
             </li>
-            <button onClick={() => handleDeleteWorkout(workout._id)}>Delete Workout</button>
+            
           </React.Fragment>
         ))}
       </ul>
