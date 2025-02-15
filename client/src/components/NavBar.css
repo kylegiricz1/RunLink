@@ -1,0 +1,40 @@
+.navbar {
+  background-color: rgb(99, 163, 104);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between; /* Aligns left and right sections */
+  align-items: center;
+}
+
+.navbar-list,
+.profile-list {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-item {
+  margin: 0 10px; /* Even spacing between items */
+  background-color: rgb(86, 64, 13);
+  padding: 3px 8px;
+  border-radius: 4px; /* Slight rounding for cleaner look */
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: white;
+  font-size: 15px;
+  padding: 3px 10px;
+  transition: color 0.3s;
+}
+
+.navbar-link:hover {
+  color: rgb(43, 137, 49);
+}
