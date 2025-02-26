@@ -1,7 +1,7 @@
 const Workout = require("../models/workout");
 
 const createWorkout = async (req, res) =>{
-    const {location,distance,pace,description}= req.body;
+    const {location,distance,pace,description} = req.body;
     const date= new Date(req.body.date)
     try {
         const newWorkout = new Workout({ location, date, distance, pace, description});

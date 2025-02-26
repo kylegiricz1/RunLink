@@ -1,8 +1,14 @@
-import React from 'react';
+import {React} from 'react';
 import { Link } from 'react-router-dom';
 import './NavBar.css';
+import LogoutButton from './LogOutButton';
+import { useSelector } from 'react-redux';
+
 
 const Navbar = () => {
+  const token = useSelector((state) => state.auth.token); 
+  const isAuthenticated = !!token;
+
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -12,8 +18,16 @@ const Navbar = () => {
           <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
         </ul>
         <ul className="profile-list">
-          <li className="navbar-item"><Link to="/signIn" className="navbar-link">Sign In</Link></li>
-          <li className="navbar-item"><Link to="/signUp" className="navbar-link">Sign Up</Link></li>
+          {isAuthenticated ? (
+            <li className="navbar-item">
+              <LogoutButton />
+            </li>
+          ) : (
+            <>
+              <li className="navbar-item"><Link to="/signIn" className="navbar-link">Sign In</Link></li>
+              <li className="navbar-item"><Link to="/signUp" className="navbar-link">Sign Up</Link></li>
+            </>
+          )}
         </ul>
       </div>
     </nav>
