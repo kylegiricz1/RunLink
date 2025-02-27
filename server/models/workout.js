@@ -13,8 +13,6 @@ const pointSchema = new mongoose.Schema({
   },
 });
 
-
-
 const workoutSchema = new mongoose.Schema({
     location:{
       type: pointSchema,
@@ -43,7 +41,9 @@ const workoutSchema = new mongoose.Schema({
     },
     description:{
       type: String
-    }
+    },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
 module.exports = mongoose.model('Workout', workoutSchema);

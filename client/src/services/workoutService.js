@@ -12,6 +12,26 @@ export const deleteWorkout = async (id) => {
 };
 
 export const addWorkout = async (workout) => {
-  const response = await axios.post(API_URL, workout);
+  const token = localStorage.getItem('token');
+  if (!token) {
+    throw new Error('No token found, user is not authenticated');
+  }
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
+    },
+  };
+  const response = await axios.post(API_URL, workout, config);
+  return response.data;
+};
+
+export const joinWorkout = async(workoutId, token) => {
+  const tokens = localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${tokens}`,
+    },
+  };
+  const response = await axios.post(`${API_URL}/${workoutId}/join`, {}, config);
   return response.data;
 };

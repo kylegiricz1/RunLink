@@ -1,0 +1,12 @@
+.join-button {
+    background-color: rgba(45, 108, 226, 0.767);
+    color: white;
+    border: none;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.join-button:hover {
+    background-color: rgb(94, 187, 249);
+}

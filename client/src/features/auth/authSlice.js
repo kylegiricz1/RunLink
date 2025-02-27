@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import {addUser, signInUser} from '../../services/authService';
 
+const storedUser = localStorage.getItem('storedUser');
+
 
 export const signupUser = createAsyncThunk('auth/signupUser', async (user) => {
   const response = await addUser(user);
@@ -16,12 +18,13 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (user) => {
 
 const authSlice = createSlice({
     name: 'auth',
-    initialState: { user: null, token: localStorage.getItem('token') || null, loading: false, error: null },
+    initialState: { user: storedUser ? JSON.parse(storedUser) : null, token: localStorage.getItem('token') || null, loading: false, error: null },
     reducers: {
         logout: (state) => {
             state.user = null;
             state.token = null;
             localStorage.removeItem('token');
+            localStorage.removeItem('storedUser');
           }
     },
     extraReducers: (builder) => {
@@ -29,6 +32,7 @@ const authSlice = createSlice({
             .addCase(signupUser.pending, (state) => { state.loading = true; })
             .addCase(signupUser.fulfilled, (state, action) => {
                 state.loading = false;
+                localStorage.setItem('storedUser', JSON.stringify(action.payload.user));
                 state.user = action.payload.user;
                 state.token = action.payload.token;
             })
@@ -39,6 +43,7 @@ const authSlice = createSlice({
             .addCase(loginUser.pending, (state) => { state.loading = true; })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.loading = false;
+                localStorage.setItem('storedUser', JSON.stringify(action.payload.user));
                 state.user = action.payload.user;
                 state.token = action.payload.token;
             })

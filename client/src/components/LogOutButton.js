@@ -9,7 +9,7 @@ const LogoutButton = () => {
 
   const handleLogout = () => {
     dispatch(logout()); // Dispatch Redux action
-    navigate('/'); // Redirect to sign-in page
+    navigate('/about'); // Redirect to about
   };
 
   return (
