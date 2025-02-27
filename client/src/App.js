@@ -6,6 +6,7 @@ import SignUp from './pages/SignUp';
 import SignIn from './pages/SignIn';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Profile from './pages/Profile';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/signIn" element={<SignIn/>} />
         <Route path="/about" element={<About/>} />
+        <Route path="/profile" element={<Profile/>} />
         <Route path='/contact' element={<Contact/>} />
       </Routes>
     </Router>

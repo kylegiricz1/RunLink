@@ -1,0 +1,53 @@
+/* src/pages/ProfilePage.css */
+.profile-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .profile-avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .profile-info {
+    margin-top: 20px;
+  }
+  
+  .profile-info label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  
+  .profile-info input,
+  .profile-info textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .profile-footer {
+    margin-top: 30px;
+  }
+  
+  .profile-footer button {
+    margin-right: 10px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .profile-footer button:hover {
+    background-color: #0056b3;
+  }
+  

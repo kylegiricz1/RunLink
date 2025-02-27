@@ -19,9 +19,14 @@ const Navbar = () => {
         </ul>
         <ul className="profile-list">
           {isAuthenticated ? (
+            <>
             <li className="navbar-item">
               <LogoutButton />
             </li>
+            <li className="navbar-item">
+              <Link to="/profile" className="navbar-link">Profile</Link>
+            </li>
+            </>
           ) : (
             <>
               <li className="navbar-item"><Link to="/signIn" className="navbar-link">Sign In</Link></li>
