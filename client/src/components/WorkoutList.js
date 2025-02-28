@@ -1,7 +1,7 @@
 // src/components/WorkoutList.js
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteWorkoutById, joinWorkoutById} from '../features/workouts/workoutsSlice';
+import { deleteWorkoutById, joinWorkoutById, leaveWorkoutById} from '../features/workouts/workoutsSlice';
 
 import '../styles/styles.css';
 import './joinButton.css';
@@ -10,13 +10,17 @@ const WorkoutList = () => {
   const dispatch = useDispatch();
   const workouts = useSelector((state) => state.workouts.workouts);
   const user = useSelector((state) => state.auth.user);
-
+  
   const handleDeleteWorkout = (id) => {
     dispatch(deleteWorkoutById(id));
   };
 
   const handleJoinWorkout = (id) => {
     dispatch(joinWorkoutById(id));
+  }
+
+  const handleLeaveWorkout = (id) => {
+    dispatch(leaveWorkoutById(id));
   }
 
   return (
@@ -38,9 +42,16 @@ const WorkoutList = () => {
                 </>
               )}
 
-              {user && workout.createdBy?._id !== user.id && (
+              {user && workout.createdBy?._id !== user.id && 
+                !workout.participants.some(participant => participant._id === user.id) &&(
                 <>
                   <button className="join-button" onClick={() => handleJoinWorkout(workout._id)}>Join Workout</button>
+                </>
+              )}
+
+              {user && workout.participants.some(participant => participant._id === user.id) &&(
+                <>
+                  <button onClick={() => handleLeaveWorkout(workout._id)} className="join-button">Leave</button>
                 </>
               )}
 

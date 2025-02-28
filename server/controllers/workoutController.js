@@ -61,9 +61,29 @@ const joinWorkout = async(req, res) => {
   }
 };
 
-const leaveWorkout = async(req, res) => {
-  return null;
-}
+const leaveWorkout = async (req, res) => {
+  try {
+    const workout = await Workout.findById(req.params.id);
+
+    if (!workout) {
+      return res.status(404).json({ message: "Workout not found" });
+    }
+
+    if (!workout.participants.some(participant => participant._id.toString() === req.user.id)) {
+      return res.status(400).json({ message: "Haven't joined workout" });
+    }
+
+    workout.participants = workout.participants.filter(participant => participant._id.toString() !== req.user.id);
+
+    await workout.save();
+
+    res.status(200).json({ message: "Left workout successfully", workout});
+
+  } catch (error) {
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
 
 module.exports = {
     createWorkout,

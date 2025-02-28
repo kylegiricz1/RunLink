@@ -1,6 +1,6 @@
 // src/features/workouts/workoutsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchWorkouts, deleteWorkout, addWorkout, joinWorkout} from '../../services/workoutService';
+import { fetchWorkouts, deleteWorkout, addWorkout, joinWorkout, leaveWorkout} from '../../services/workoutService';
 
 export const fetchAllWorkouts = createAsyncThunk('workouts/fetchAll', async () => {
   const response = await fetchWorkouts();
@@ -21,6 +21,15 @@ export const joinWorkoutById = createAsyncThunk('workouts/joinWorkoutById', asyn
   try {
     const token = thunkAPI.getState().auth.user.token;
     return await joinWorkout(workoutId, token);
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data);
+  }
+})
+
+export const leaveWorkoutById = createAsyncThunk('workouts/leaveWorkoutById', async(workoutId, thunkAPI) => {
+  try{
+    const token = thunkAPI.getState().auth.user.token;
+    return await leaveWorkout(workoutId, token);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
   }
@@ -61,7 +70,29 @@ const workoutsSlice = createSlice({
           };
           state.workouts[index] = updatedWorkout;
         }
+      })
+      .addCase(leaveWorkoutById.fulfilled, (state, action) => {
+        const { workout } = action.payload;
+        const workoutId = workout._id; 
+        const storedUser = JSON.parse(localStorage.getItem('storedUser'));
+        const participantId = storedUser ? storedUser.id : null; 
+        console.log(action.payload);
+       
+        const index = state.workouts.findIndex(w => w._id === workoutId);
+      
+        if (index !== -1) {
+          const updatedWorkout = { 
+            ...state.workouts[index],
+            participants: state.workouts[index].participants.filter(
+              participant => participant._id !== participantId 
+            )
+          };
+          console.log(updatedWorkout);
+          
+          state.workouts[index] = updatedWorkout;
+        }
       });
+      
   },
 });
 

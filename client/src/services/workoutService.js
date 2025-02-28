@@ -35,3 +35,14 @@ export const joinWorkout = async(workoutId, token) => {
   const response = await axios.post(`${API_URL}/${workoutId}/join`, {}, config);
   return response.data;
 };
+
+export const leaveWorkout = async(workoutId, token) => {
+  const tokens = localStorage.getItem('token');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${tokens}`,
+    },
+  };
+  const response = await axios.post(`${API_URL}/${workoutId}/leave`, {}, config);
+  return response.data;
+}
