@@ -44,5 +44,7 @@ export const leaveWorkout = async(workoutId, token) => {
     },
   };
   const response = await axios.post(`${API_URL}/${workoutId}/leave`, {}, config);
+
   return response.data;
+
 }

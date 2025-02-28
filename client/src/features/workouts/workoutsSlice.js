@@ -21,6 +21,7 @@ export const joinWorkoutById = createAsyncThunk('workouts/joinWorkoutById', asyn
   try {
     const token = thunkAPI.getState().auth.user.token;
     return await joinWorkout(workoutId, token);
+  
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
   }
@@ -63,11 +64,15 @@ const workoutsSlice = createSlice({
       })
       .addCase(joinWorkoutById.fulfilled, (state, action) => {
         const index = state.workouts.findIndex(w => w._id === action.payload.workout._id);
-        if (index !== -1) {
+        const storedUser = JSON.parse(localStorage.getItem('storedUser'));
+        const participant = storedUser ? { _id: storedUser.id } : null; 
+      
+        if (index !== -1 && participant) {
           const updatedWorkout = { 
             ...state.workouts[index], 
-            participants: [...state.workouts[index].participants, action.payload.workout.participants]
+            participants: [...state.workouts[index].participants, participant] 
           };
+          console.log(updatedWorkout);
           state.workouts[index] = updatedWorkout;
         }
       })
@@ -87,7 +92,6 @@ const workoutsSlice = createSlice({
               participant => participant._id !== participantId 
             )
           };
-          console.log(updatedWorkout);
           
           state.workouts[index] = updatedWorkout;
         }
