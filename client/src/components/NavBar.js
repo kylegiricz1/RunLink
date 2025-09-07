@@ -12,14 +12,17 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
+      <img src="/RunLink.jpeg" alt="RunLink Logo" style={{ width: "75px", height: "75px" }} />
         <ul className="navbar-list">
           <li className="navbar-item"><Link to="/" className="navbar-link">Home</Link></li>
           <li className="navbar-item"><Link to="/about" className="navbar-link">About</Link></li>
           <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
+          <li className='navbar-item'><Link to="/workoutMap" className='navbar-link'>WorkoutMap</Link></li>
         </ul>
         <ul className="profile-list">
           {isAuthenticated ? (
             <>
+            <li className="navbar-item"><Link to="/subscribe" className="navbar-link">Subscribe</Link></li>
             <li className="navbar-item">
               <LogoutButton />
             </li>

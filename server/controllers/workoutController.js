@@ -1,5 +1,5 @@
 const Workout = require("../models/workout");
-
+const User = require("../models/user");
 const createWorkout = async (req, res) =>{
     const {location,distance,pace,description} = req.body;
     const date= new Date(req.body.date);
@@ -53,7 +53,15 @@ const joinWorkout = async(req, res) => {
     }
     
     workout.participants.push(req.user.id);
+
     await workout.save();
+    
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      { $inc: { totalLinks: 1 } },
+      { new: true }
+    );
+    console.log("Updated User:", updatedUser);
 
     res.json({ message: "Successfully joined workout", workout });
   } catch (error) {
@@ -77,6 +85,7 @@ const leaveWorkout = async (req, res) => {
 
     await workout.save();
 
+    await User.findByIdAndUpdate(req.user.id, { $inc: { totalLinks: -1 } });
     res.status(200).json({ message: "Left workout successfully", workout});
 
   } catch (error) {

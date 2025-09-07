@@ -1,5 +1,5 @@
 .navbar {
-  background-color: rgb(99, 163, 104);
+  background-color: #39a35f;
   position: sticky;
   top: 0;
   width: 100%;
@@ -22,7 +22,7 @@
 
 .navbar-item {
   margin: 0 10px; /* Even spacing between items */
-  background-color: rgb(86, 64, 13);
+  background-color: #5b4e3e;
   padding: 3px 8px;
   border-radius: 4px; /* Slight rounding for cleaner look */
 }
@@ -36,5 +36,5 @@
 }
 
 .navbar-link:hover {
-  color: rgb(43, 137, 49);
+  color: #efdcb3;
 }

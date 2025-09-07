@@ -5,6 +5,8 @@
     padding: 4px 6px;
     border-radius: 4px;
     cursor: pointer;
+    position: absolute;
+    bottom: 10px;
     transition: background-color 0.3s ease;
 }
 .join-button:hover {

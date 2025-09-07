@@ -1,0 +1,90 @@
+/* Workout List Container */
+.workout-container {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    gap: 10px;
+    list-style: none;
+    padding: 0px;
+    justify-content: center;
+  }
+  
+  /* Individual Workout Item */
+  .workout-container li {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    background: #f9f9f9;
+    width: 320px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    max-height: 450px;
+    height: 40vh;
+  }
+  
+  .workout-container li:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Workout Header */
+  .workout-header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+     /* Optional: Add a background for readability */
+    padding: 5px 5px;
+    border-radius: 5px;
+  }
+  
+  /* Workout Info */
+  .workout-info {
+    display: flex;
+    flex-direction: column;
+    padding: 70px;
+    gap: .5px;
+    font-size: 0.9rem;
+  }
+  
+  .workout-info span {
+    background: #eef1f7;
+    padding: 6px 10px;
+    border-radius: 5px;
+  }
+  
+  /* Delete Button */
+  .delete-button {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin-top: 10px;
+  }
+  
+  .delete-button:hover {
+    background: #c0392b;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .workout-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .workout-container li {
+      width: 90%;
+    }
+  }
+  

@@ -1,0 +1,19 @@
+.subscription-page {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .subscription-header {
+    padding: 20px;
+  }
+  
+  .subscription-title {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .subscription-subtitle {
+    color: gray;
+    font-size: 1rem;
+  }
+  

@@ -2,6 +2,18 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 
+const getProfile = async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select("name email totalLinks");
+        if (!user) {
+            return res.status(404).json({ msg: "User not found" });
+        }
+        res.json(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Server Error" });
+    }
+}
 
 const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
@@ -34,7 +46,7 @@ const loginUser = async (req, res) => {
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
+        res.json({ token, user: { id: user._id, name: user.name, email: user.email, totalLinks: user.totalLinks} });
     } catch (error) {
         res.status(500).json({ msg: "Server Error" });
     }
@@ -51,4 +63,4 @@ const getUsers = async (req, res) => {
           }
 };
 
-module.exports = { registerUser, getUsers, loginUser};
+module.exports = { registerUser, getUsers, loginUser, getProfile};

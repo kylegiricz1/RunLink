@@ -20,7 +20,6 @@ const DashBoard = () => {
     <div className="dashboard-container">
       {/* Workout List on the left */}
       <div className="workout-list">
-        <h1 className="text-2xl font-bold mb-4">RunLink</h1>
         <WorkoutList />
       </div>
 

@@ -1,0 +1,17 @@
+.cta-section {
+    text-align: center;
+    padding: 30px;
+    background-color: #f8f9fa;
+    margin-top: 20px;
+  }
+  
+  .cta-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .cta-text {
+    font-size: 1rem;
+    color: #666;
+  }
+  

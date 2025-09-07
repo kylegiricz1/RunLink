@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteWorkoutById, joinWorkoutById, leaveWorkoutById } from '../features/workouts/workoutsSlice';
 
-import '../styles/styles.css';
+import { FaTrash } from "react-icons/fa";
+import '../styles/workoutList.css';
 import './joinButton.css';
 
 const WorkoutList = () => {
@@ -31,17 +32,26 @@ const WorkoutList = () => {
   return (
     <>
       <h2>Workouts</h2>
-      <ul>
+      <ul className='workout-container'>
         {workouts.map((workout) => (
           <React.Fragment key={workout._id}>
             <li>
-              <h3>{`${workout.createdBy.name}'s Workout!`}</h3>
-              Location: LNG: {workout.location.coordinates[0]}, LAT: {workout.location.coordinates[1]}, Date: {new Date(workout.date).toLocaleDateString()}, Distance: {workout.distance} km, Pace: {workout.pace.minutes} min {workout.pace.seconds} sec,
-              Description: {workout.description}, Group Size: {workout.participants.length},
-
+              <div className="workout-header">
+                <h3>{`${workout.createdBy.name}'s Workout!`}</h3>
+              </div>
+              <div className="workout-info">
+                <span><strong>LNG:</strong> {workout.location.coordinates[0]}</span>
+                <span><strong>LAT:</strong> {workout.location.coordinates[1]}</span>
+                <span><strong>Date:</strong> {new Date(workout.date).toLocaleDateString()}</span>
+                <span><strong>Distance:</strong> {workout.distance} km</span>
+                <span><strong>Pace:</strong> {workout.pace.minutes} min {workout.pace.seconds} sec</span>
+                <span><strong>Description:</strong> {workout.description}</span>
+                <span><strong>Group Size:</strong> {workout.participants.length}</span>
+              </div>
+              
               {user && workout.createdBy?._id === user.id && (
                 <>
-                  <button onClick={() => handleDeleteWorkout(workout._id)}>Delete Workout</button>
+                  <button className='delete-button' onClick={() => handleDeleteWorkout(workout._id)}><FaTrash/></button>
                 </>
               )}
 
@@ -67,6 +77,7 @@ const WorkoutList = () => {
               )}
             </li>
           </React.Fragment>
+          
         ))}
       </ul>
     </>

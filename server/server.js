@@ -4,6 +4,7 @@ const cors = require('cors');
 require('dotenv').config();
 const workoutRoutes = require('./routes/workoutRoutes');
 const authRoutes = require('./routes/authRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
 const app = express();
 
 // Middleware
@@ -18,6 +19,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Define a simple route
 app.use('/api', workoutRoutes);
 app.use('/api', authRoutes);
+app.use('/api', paymentRoutes);
 app.get('/', (req, res) => {
   res.send('Server is running');
 });
