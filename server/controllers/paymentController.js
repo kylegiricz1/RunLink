@@ -27,4 +27,4 @@ const createSubscription = async (req, res) => {
     }
 }
 
-export default createSubscription;
+module.exports = {createSubscription};
