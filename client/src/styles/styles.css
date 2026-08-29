@@ -108,3 +108,26 @@ form {
     background-color: #cc0000;
   }
     
+form label {
+  display: grid;
+  gap: 0.4rem;
+  color: #27302a;
+  font-weight: 600;
+}
+
+form input,
+form textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #c8d2ca;
+  border-radius: 0.5rem;
+  font: inherit;
+}
+
+.map-message {
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  background: #fff4df;
+  color: #6c4a09;
+}

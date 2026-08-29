@@ -19,7 +19,7 @@ const MapComponent = ({ onLocationSelect }) => {
   const autocompleteRef = useRef(null);
 
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: 'AIzaSyDmNimGxOWu8ZSqYLWgfUsAIagyGvnTXBM',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY || '',
     libraries,
   });
 
@@ -30,6 +30,7 @@ const MapComponent = ({ onLocationSelect }) => {
   const onPlaceChanged = useCallback(() => {
     if (autocompleteRef.current) {
       const place = autocompleteRef.current.getPlace();
+      if (!place.geometry?.location) return;
       const location = place.geometry.location;
       setMapCenter({
         lat: location.lat(),
@@ -46,18 +47,22 @@ const MapComponent = ({ onLocationSelect }) => {
     }
   }, [onLocationSelect]);
 
+  if (!process.env.REACT_APP_GOOGLE_MAPS_API_KEY) {
+    return <p className="map-message">Add a Google Maps key to enable location search.</p>;
+  }
+
   if (loadError) {
-    return <div>Error loading maps</div>;
+    return <p className="map-message">The map could not load. Check the configured Maps key and try again.</p>;
   }
 
   if (!isLoaded) {
-    return <div>Loading Maps</div>;
+    return <p className="map-message">Loading map…</p>;
   }
 
   return (
     <>
       <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
-        <input type="text" placeholder="Search for a location" />
+        <input type="text" aria-label="Search for a run location" placeholder="Search for a meeting place" required />
       </Autocomplete>
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
