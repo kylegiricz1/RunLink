@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import WorkoutForm from '../components/WorkoutForm';
 import WorkoutList from '../components/WorkoutList';
 import { fetchAllWorkouts } from '../features/workouts/workoutsSlice';
-import './DashBoard.css'; // Import the CSS file
+import { Link } from 'react-router-dom';
+import './DashBoard.css';
 
 const DashBoard = () => {
   const dispatch = useDispatch();
@@ -17,19 +18,22 @@ const DashBoard = () => {
   }, [workoutsStatus, dispatch]);
 
   return (
-    <div className="dashboard-container">
-      {/* Workout List on the left */}
-      <div className="workout-list">
-        <WorkoutList />
-      </div>
-
-      {/* Main content area */}
-      <div className="main-content">
+    <main className="dashboard-container">
+      <section className="dashboard-heading" aria-labelledby="dashboard-title">
+        <div>
+          <p className="eyebrow">Run together</p>
+          <h1 id="dashboard-title">Find your next group run</h1>
+          <p>Browse upcoming sessions, join a crew, or organize a run of your own.</p>
+        </div>
+        <Link className="map-link" to="/workoutMap">Explore the map</Link>
+      </section>
+      <section className="dashboard-actions" aria-label="Create a workout">
         <button 
           className="toggle-button" 
-          onClick={() => setShowForm(!showForm)}
+          onClick={() => setShowForm((visible) => !visible)}
+          aria-expanded={showForm}
         >
-          {showForm ? "Close Form" : "Add Workout"}
+          {showForm ? "Cancel" : "Create a run"}
         </button>
 
         {showForm && (
@@ -37,8 +41,9 @@ const DashBoard = () => {
             <WorkoutForm />
           </div>
         )}
-      </div>
-    </div>
+      </section>
+      <section className="workout-list" aria-label="Upcoming workouts"><WorkoutList /></section>
+    </main>
   );
 };
 
