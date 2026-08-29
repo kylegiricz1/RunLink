@@ -8,8 +8,8 @@ const LogoutButton = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    navigate('/about');// Redirect to about
-    dispatch(logout()); // Dispatch Redux action
+    dispatch(logout());
+    navigate('/');
   };
 
   return (

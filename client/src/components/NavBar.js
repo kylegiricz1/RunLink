@@ -1,44 +1,41 @@
-import {React} from 'react';
-import { Link } from 'react-router-dom';
-import './NavBar.css';
-import LogoutButton from './LogOutButton';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { FaMapMarkedAlt, FaRunning } from 'react-icons/fa';
+import LogoutButton from './LogOutButton';
+import './NavBar.css';
 
+const navLinkClass = ({ isActive }) => `navbar-link${isActive ? ' navbar-link--active' : ''}`;
 
 const Navbar = () => {
-  const token = useSelector((state) => state.auth.token); 
-  const isAuthenticated = !!token;
+  const token = useSelector((state) => state.auth.token);
+  const isAuthenticated = Boolean(token);
 
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-      <img src="/RunLink.jpeg" alt="RunLink Logo" style={{ width: "75px", height: "75px" }} />
+    <header className="navbar">
+      <nav className="navbar-container" aria-label="Main navigation">
+        <NavLink to="/" className="navbar-brand" aria-label="RunLink home">
+          <img src="/RunLink.jpeg" alt="" className="navbar-logo" />
+          <span><strong>RunLink</strong><small>Find your running crew</small></span>
+        </NavLink>
         <ul className="navbar-list">
-          <li className="navbar-item"><Link to="/" className="navbar-link">Home</Link></li>
-          <li className="navbar-item"><Link to="/about" className="navbar-link">About</Link></li>
-          <li className="navbar-item"><Link to="/contact" className="navbar-link">Contact</Link></li>
-          <li className='navbar-item'><Link to="/workoutMap" className='navbar-link'>WorkoutMap</Link></li>
+          <li><NavLink to="/" end className={navLinkClass}>Discover</NavLink></li>
+          <li><NavLink to="/workoutMap" className={navLinkClass}><FaMapMarkedAlt aria-hidden="true" /> Map</NavLink></li>
+          <li><NavLink to="/about" className={navLinkClass}>About</NavLink></li>
+          <li><NavLink to="/contact" className={navLinkClass}>Contact</NavLink></li>
         </ul>
         <ul className="profile-list">
-          {isAuthenticated ? (
-            <>
-            <li className="navbar-item"><Link to="/subscribe" className="navbar-link">Subscribe</Link></li>
-            <li className="navbar-item">
-              <LogoutButton />
-            </li>
-            <li className="navbar-item">
-              <Link to="/profile" className="navbar-link">Profile</Link>
-            </li>
-            </>
-          ) : (
-            <>
-              <li className="navbar-item"><Link to="/signIn" className="navbar-link">Sign In</Link></li>
-              <li className="navbar-item"><Link to="/signUp" className="navbar-link">Sign Up</Link></li>
-            </>
-          )}
+          {isAuthenticated ? <>
+            <li><NavLink to="/subscribe" className={navLinkClass}>Membership</NavLink></li>
+            <li><NavLink to="/profile" className="profile-link"><FaRunning aria-hidden="true" /> Profile</NavLink></li>
+            <li><LogoutButton /></li>
+          </> : <>
+            <li><NavLink to="/signIn" className={navLinkClass}>Sign in</NavLink></li>
+            <li><NavLink to="/signUp" className="signup-link">Join RunLink</NavLink></li>
+          </>}
         </ul>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 
