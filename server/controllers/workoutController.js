@@ -5,9 +5,18 @@ const createWorkout = async (req, res) =>{
     const date= new Date(req.body.date);
     const userId = req.user._id;
     try {
+        if (!location || location.type !== 'Point' || !Array.isArray(location.coordinates) || location.coordinates.length !== 2) {
+          return res.status(400).json({ message: 'A valid map location is required' });
+        }
+        if (Number(distance) <= 0 || Number(pace?.minutes) < 0 || Number(pace?.seconds) < 0 || Number(pace?.seconds) > 59) {
+          return res.status(400).json({ message: 'Distance and pace must be valid values' });
+        }
+        if (Number.isNaN(date.getTime()) || date <= new Date()) {
+          return res.status(400).json({ message: 'Choose a future workout date' });
+        }
         const newWorkout = new Workout({ location, date, distance, pace, description, createdBy: userId,});
-        const populatedWorkout = await newWorkout.populate('createdBy', 'name');
-        await populatedWorkout.save();
+        await newWorkout.save();
+        await newWorkout.populate('createdBy', 'name');
         res.status(201).json(newWorkout);
       } catch (error) {
         res.status(400).json({ message: error.message });
@@ -27,10 +36,14 @@ const getWorkouts = async (req, res) => {
 
 const deleteWorkout = async (req, res) => {
   try{
-    const workout = await Workout.findByIdAndDelete(req.params.id);
+    const workout = await Workout.findById(req.params.id);
     if (!workout) {
       return res.status(404).json({ message: 'Workout not found' });
     }
+    if (workout.createdBy.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Only the organizer can delete this workout' });
+    }
+    await workout.deleteOne();
     res.status(200).json({ message: 'Workout deleted successfully' });
   }catch(error){
     res.status(500).json({message: error.message});

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/workouts", getWorkouts);
 router.post("/workouts", protect, createWorkout);
-router.delete("/workouts/:id", deleteWorkout);
+router.delete("/workouts/:id", protect, deleteWorkout);
 
 router.post('/workouts/:id/join', protect, joinWorkout);
 router.post('/workouts/:id/leave', protect, leaveWorkout);

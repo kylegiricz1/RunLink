@@ -10,6 +10,10 @@ const pointSchema = new mongoose.Schema({
   coordinates: {
     type: [Number],
     required: true,
+    validate: {
+      validator: (coordinates) => coordinates.length === 2 && coordinates.every(Number.isFinite),
+      message: 'Location coordinates must be a longitude and latitude pair',
+    },
   },
 });
 
@@ -40,9 +44,11 @@ const workoutSchema = new mongoose.Schema({
           }
     },
     description:{
-      type: String
+      type: String,
+      trim: true,
+      maxlength: 500,
     },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
