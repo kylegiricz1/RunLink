@@ -7,43 +7,28 @@ export const fetchWorkouts = async () => {
   return response.data;
 };
 
+const getAuthConfig = () => {
+  const token = localStorage.getItem('token');
+  if (!token) throw new Error('Please sign in to manage a workout');
+  return { headers: { Authorization: `Bearer ${token}` } };
+};
+
 export const deleteWorkout = async (id) => {
-  await axios.delete(`${API_URL}/${id}`);
+  await axios.delete(`${API_URL}/${id}`, getAuthConfig());
 };
 
 export const addWorkout = async (workout) => {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    throw new Error('No token found, user is not authenticated');
-  }
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`, // Pass the token in the Authorization header
-    },
-  };
-  const response = await axios.post(API_URL, workout, config);
+  const response = await axios.post(API_URL, workout, getAuthConfig());
   return response.data;
 };
 
-export const joinWorkout = async(workoutId, token) => {
-  const tokens = localStorage.getItem('token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${tokens}`,
-    },
-  };
-  const response = await axios.post(`${API_URL}/${workoutId}/join`, {}, config);
+export const joinWorkout = async(workoutId) => {
+  const response = await axios.post(`${API_URL}/${workoutId}/join`, {}, getAuthConfig());
   return response.data;
 };
 
-export const leaveWorkout = async(workoutId, token) => {
-  const tokens = localStorage.getItem('token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${tokens}`,
-    },
-  };
-  const response = await axios.post(`${API_URL}/${workoutId}/leave`, {}, config);
+export const leaveWorkout = async(workoutId) => {
+  const response = await axios.post(`${API_URL}/${workoutId}/leave`, {}, getAuthConfig());
 
   return response.data;
 
