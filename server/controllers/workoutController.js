@@ -69,6 +69,7 @@ const joinWorkout = async(req, res) => {
 
     await workout.save();
     await workout.populate('participants', 'name');
+    await workout.populate('createdBy', 'name');
     
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
@@ -99,6 +100,7 @@ const leaveWorkout = async (req, res) => {
 
     await workout.save();
     await workout.populate('participants', 'name');
+    await workout.populate('createdBy', 'name');
 
     await User.findByIdAndUpdate(req.user.id, { $inc: { totalLinks: -1 } });
     res.status(200).json({ message: "Left workout successfully", workout});
