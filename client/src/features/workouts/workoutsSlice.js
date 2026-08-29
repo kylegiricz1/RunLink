@@ -19,8 +19,7 @@ export const createWorkout = createAsyncThunk('workouts/create', async (newWorko
 
 export const joinWorkoutById = createAsyncThunk('workouts/joinWorkoutById', async (workoutId, thunkAPI) => {
   try {
-    const token = thunkAPI.getState().auth.user.token;
-    return await joinWorkout(workoutId, token);
+    return await joinWorkout(workoutId);
   
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
@@ -29,8 +28,7 @@ export const joinWorkoutById = createAsyncThunk('workouts/joinWorkoutById', asyn
 
 export const leaveWorkoutById = createAsyncThunk('workouts/leaveWorkoutById', async(workoutId, thunkAPI) => {
   try{
-    const token = thunkAPI.getState().auth.user.token;
-    return await leaveWorkout(workoutId, token);
+    return await leaveWorkout(workoutId);
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data);
   }
@@ -64,37 +62,11 @@ const workoutsSlice = createSlice({
       })
       .addCase(joinWorkoutById.fulfilled, (state, action) => {
         const index = state.workouts.findIndex(w => w._id === action.payload.workout._id);
-        const storedUser = JSON.parse(localStorage.getItem('storedUser'));
-        const participant = storedUser ? { _id: storedUser.id } : null; 
-      
-        if (index !== -1 && participant) {
-          const updatedWorkout = { 
-            ...state.workouts[index], 
-            participants: [...state.workouts[index].participants, participant] 
-          };
-          console.log(updatedWorkout);
-          state.workouts[index] = updatedWorkout;
-        }
+        if (index !== -1) state.workouts[index] = action.payload.workout;
       })
       .addCase(leaveWorkoutById.fulfilled, (state, action) => {
-        const { workout } = action.payload;
-        const workoutId = workout._id; 
-        const storedUser = JSON.parse(localStorage.getItem('storedUser'));
-        const participantId = storedUser ? storedUser.id : null; 
-        console.log(action.payload);
-       
-        const index = state.workouts.findIndex(w => w._id === workoutId);
-      
-        if (index !== -1) {
-          const updatedWorkout = { 
-            ...state.workouts[index],
-            participants: state.workouts[index].participants.filter(
-              participant => participant._id !== participantId 
-            )
-          };
-          
-          state.workouts[index] = updatedWorkout;
-        }
+        const index = state.workouts.findIndex(w => w._id === action.payload.workout._id);
+        if (index !== -1) state.workouts[index] = action.payload.workout;
       });
       
   },
