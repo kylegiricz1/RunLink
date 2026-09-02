@@ -1,11 +1,11 @@
-import axios from 'axios';
+import api from './api';
 
 const API_URL = 'http://localhost:5000/api/auth';
 
 export const addUser = async (user) => {
     try {
         console.log(user);
-        const response = await axios.post(`${API_URL}/register`, user);
+        const response = await api.post(`${API_URL}/register`, user);
 
         if (response.data.token) {
             localStorage.setItem("token", response.data.token);
@@ -20,7 +20,7 @@ export const addUser = async (user) => {
 
 export const signInUser = async (user) => {
     try{    
-        const response = await axios.post(`${API_URL}/login`, user)
+        const response = await api.post(`${API_URL}/login`, user)
 
         if (response.data.token) {
             localStorage.setItem("token", response.data.token);
@@ -35,7 +35,7 @@ export const signInUser = async (user) => {
 
 export const getProfile = async (token) => {
     try{
-        const response = await axios.get(`${API_URL}/profile`, {
+        const response = await api.get(`${API_URL}/profile`, {
             headers: { Authorization: `Bearer ${token}` },
         });
 

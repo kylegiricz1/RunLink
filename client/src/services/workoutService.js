@@ -1,9 +1,9 @@
-import axios from 'axios';
+import api from './api';
 
 const API_URL = 'http://localhost:5000/api/workouts';
 
 export const fetchWorkouts = async () => {
-  const response = await axios.get(API_URL);
+  const response = await api.get(API_URL);
   return response.data;
 };
 
@@ -14,21 +14,21 @@ const getAuthConfig = () => {
 };
 
 export const deleteWorkout = async (id) => {
-  await axios.delete(`${API_URL}/${id}`, getAuthConfig());
+  await api.delete(`${API_URL}/${id}`, getAuthConfig());
 };
 
 export const addWorkout = async (workout) => {
-  const response = await axios.post(API_URL, workout, getAuthConfig());
+  const response = await api.post(API_URL, workout, getAuthConfig());
   return response.data;
 };
 
 export const joinWorkout = async(workoutId) => {
-  const response = await axios.post(`${API_URL}/${workoutId}/join`, {}, getAuthConfig());
+  const response = await api.post(`${API_URL}/${workoutId}/join`, {}, getAuthConfig());
   return response.data;
 };
 
 export const leaveWorkout = async(workoutId) => {
-  const response = await axios.post(`${API_URL}/${workoutId}/leave`, {}, getAuthConfig());
+  const response = await api.post(`${API_URL}/${workoutId}/leave`, {}, getAuthConfig());
 
   return response.data;
 
