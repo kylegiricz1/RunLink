@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaTrash } from 'react-icons/fa';
 
+import ParticipantsHover from './ParticipantsHover';
+
 import {
   deleteWorkoutById,
   joinWorkoutById,
@@ -46,10 +48,7 @@ const WorkoutCard = ({ workout, user, runAction, loadingId }) => {
           <small>min / km</small>
         </span>
 
-        <span>
-          <strong>{workout.participants?.length || 0}</strong>
-          <small>joined</small>
-        </span>
+        <ParticipantsHover participants={workout.participants} />
       </div>
 
       {workout.description && (

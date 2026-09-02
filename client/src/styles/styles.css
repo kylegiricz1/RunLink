@@ -131,3 +131,30 @@ form textarea {
   background: #fff4df;
   color: #6c4a09;
 }
+
+
+.participants-hover {
+  position: relative;
+  cursor: pointer;
+}
+
+.participants-popup {
+  display: none;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px 14px;
+  min-width: 140px;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.participants-hover:hover .participants-popup {
+  display: block;
+}
