@@ -9,7 +9,7 @@ const ParticipantsHover = ({ participants = [] }) => {
       <div className="participants-popup">
         {participants.length > 0 ? (
           participants.map((participant) => (
-            <div key={participant._id}>
+            <div className="participant" key={participant._id}>
               {participant.name}
             </div>
           ))

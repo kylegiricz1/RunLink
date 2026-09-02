@@ -138,6 +138,13 @@ form textarea {
   cursor: pointer;
 }
 
+.participant {
+  padding: 5px;
+  background-color: rgba(128, 128, 128, 0.366);
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+
 .participants-popup {
   display: none;
   position: absolute;
