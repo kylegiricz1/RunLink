@@ -9,6 +9,7 @@ import Contact from './pages/Contact';
 import Profile from './pages/Profile';
 import WorkoutMap from './pages/WorkoutMapPage';
 import SubscriptionPage from './pages/Subscription';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const App = () => {
   return (
@@ -19,10 +20,13 @@ const App = () => {
         <Route path="/signUp" element={<SignUp/>} />
         <Route path="/signIn" element={<SignIn/>} />
         <Route path="/about" element={<About/>} />
-        <Route path="/profile" element={<Profile/>} />
         <Route path='/contact' element={<Contact/>} />
         <Route path='/workoutMap' element={<WorkoutMap/>} />
         <Route path='/subscribe' element={<SubscriptionPage/>} />
+
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<Profile />} />
+        </Route>
       </Routes>
     </Router>
   );
