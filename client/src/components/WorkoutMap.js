@@ -44,7 +44,7 @@ const WorkoutMap = () => {
   if (status === 'loading') return <div className="p-4 text-center">Loading map...</div>;
 
   return (
-    <div style={{ height: '500px', width: '100%' }} className="rounded-lg shadow-lg">
+    <div style={{ height: '100%', width: '100%' }} className="rounded-lg shadow-lg">
       <MapContainer
         center={calculateCenter()}
         zoom={13}
