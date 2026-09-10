@@ -3,6 +3,8 @@ import { FaTrash } from 'react-icons/fa';
 
 import ParticipantsHover from './ParticipantsHover';
 
+import WorkoutMap from './WorkoutMap';
+
 import {
   deleteWorkoutById,
   joinWorkoutById,
@@ -51,12 +53,6 @@ const WorkoutCard = ({ workout, user, runAction, loadingId }) => {
         <ParticipantsHover participants={workout.participants} />
       </div>
 
-      {workout.description && (
-        <p className="workout-description">
-          {workout.description}
-        </p>
-      )}
-
       {isCreator && (
         <button
           className="delete-button"
@@ -66,6 +62,16 @@ const WorkoutCard = ({ workout, user, runAction, loadingId }) => {
         >
           <FaTrash />
         </button>
+      )}
+
+      <div style={{ height: '220px', width: '100%' }} className="my-2">
+        <WorkoutMap workoutId={workout._id} />
+      </div>
+
+      {workout.description && (
+        <p className="workout-description">
+          {workout.description}
+        </p>
       )}
 
       {user && !isCreator && !hasJoined && (

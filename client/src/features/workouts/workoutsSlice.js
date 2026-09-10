@@ -1,11 +1,19 @@
 // src/features/workouts/workoutsSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { fetchWorkouts, deleteWorkout, addWorkout, joinWorkout, leaveWorkout} from '../../services/workoutService';
+import { fetchWorkouts, fetchWorkout, deleteWorkout, addWorkout, joinWorkout, leaveWorkout} from '../../services/workoutService';
 
 export const fetchAllWorkouts = createAsyncThunk('workouts/fetchAll', async () => {
   const response = await fetchWorkouts();
   return response;
 });
+
+export const fetchWorkoutById = createAsyncThunk(
+  'workouts/fetchWorkoutById',
+  async (id) => {
+    const response = await fetchWorkout(id);
+    return response;
+  }
+);
 
 export const deleteWorkoutById = createAsyncThunk('workouts/deleteById', async (id) => {
   await deleteWorkout(id);
@@ -53,6 +61,10 @@ const workoutsSlice = createSlice({
       .addCase(fetchAllWorkouts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+      })
+      .addCase(fetchWorkoutById.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.workouts = [action.payload];
       })
       .addCase(deleteWorkoutById.fulfilled, (state, action) => {
         state.workouts = state.workouts.filter(workout => workout._id !== action.payload);

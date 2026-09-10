@@ -34,6 +34,24 @@ const getWorkouts = async (req, res) => {
       }
 };
 
+
+const getWorkout = async (req, res) => {
+    try {
+        const workout = await Workout.findById(req.params.id)
+            .populate('createdBy', 'name')
+            .populate('participants', 'name');
+
+        if (!workout) {
+            return res.status(404).json({ message: 'Workout not found' });
+        }
+
+        res.status(200).json(workout);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 const deleteWorkout = async (req, res) => {
   try{
     const workout = await Workout.findById(req.params.id);
@@ -114,6 +132,7 @@ const leaveWorkout = async (req, res) => {
 module.exports = {
     createWorkout,
     getWorkouts,
+    getWorkout,
     deleteWorkout,
     joinWorkout,
     leaveWorkout

@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchAllWorkouts } from '../features/workouts/workoutsSlice';
+import { fetchAllWorkouts, fetchWorkoutById } from '../features/workouts/workoutsSlice';
 
 // Fix leaflet default icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -13,13 +13,17 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-const WorkoutMap = () => {
+const WorkoutMap = ({workoutId}) => {
   const dispatch = useDispatch();
   const { workouts, status } = useSelector((state) => state.workouts);
 
   useEffect(() => {
+  if (workoutId) {
+    dispatch(fetchWorkoutById(workoutId));
+  } else {
     dispatch(fetchAllWorkouts());
-  }, [dispatch]);
+  }
+}, [dispatch, workoutId]);
 
   // Calculate average position for initial map center
   const calculateCenter = () => {
@@ -41,6 +45,10 @@ const WorkoutMap = () => {
     return [lat, lng]; // Leaflet uses [lat, lng]
   };
 
+  const workoutsToDisplay = workoutId
+  ? workouts.filter(w => w._id === workoutId)
+  : workouts;
+
   if (status === 'loading') return <div className="p-4 text-center">Loading map...</div>;
 
   return (
@@ -57,7 +65,7 @@ const WorkoutMap = () => {
     />
 
 
-        {workouts?.map((workout) => {
+        {workoutsToDisplay?.map((workout) => {
           if (workout.location && workout.location.coordinates.length === 2) {
             const [longitude, latitude] = workout.location.coordinates; // Fix: accessing correctly
             return (

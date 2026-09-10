@@ -1,10 +1,11 @@
 const express = require("express");
-const {createWorkout, getWorkouts, deleteWorkout, joinWorkout, leaveWorkout} = require ("../controllers/workoutController");
+const {createWorkout, getWorkouts, getWorkout, deleteWorkout, joinWorkout, leaveWorkout} = require ("../controllers/workoutController");
 const { protect } = require('../middleware/authMiddleware');
 const router = express.Router();
 
 
 router.get("/workouts", getWorkouts);
+router.get("/workouts/:id", getWorkout);
 router.post("/workouts", protect, createWorkout);
 router.delete("/workouts/:id", protect, deleteWorkout);
 

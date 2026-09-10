@@ -7,14 +7,19 @@ export const fetchWorkouts = async () => {
   return response.data;
 };
 
+export const fetchWorkout = async (workoutId) => {
+  const response = await api.get(`${API_URL}/${workoutId}`)
+  return response.data;
+}
+
 const getAuthConfig = () => {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('Please sign in to manage a workout');
   return { headers: { Authorization: `Bearer ${token}` } };
 };
 
-export const deleteWorkout = async (id) => {
-  await api.delete(`${API_URL}/${id}`, getAuthConfig());
+export const deleteWorkout = async (workoutId) => {
+  await api.delete(`${API_URL}/${workoutId}`, getAuthConfig());
 };
 
 export const addWorkout = async (workout) => {
