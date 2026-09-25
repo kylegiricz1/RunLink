@@ -5,6 +5,7 @@ import ParticipantsHover from './ParticipantsHover';
 
 import WorkoutMap from './WorkoutMap';
 
+
 import {
   deleteWorkoutById,
   joinWorkoutById,
