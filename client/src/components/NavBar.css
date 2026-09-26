@@ -1,4 +1,4 @@
-.navbar { position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #dbe5dd; background: rgba(255, 255, 255, .96); box-shadow: 0 3px 14px rgba(24, 51, 34, .06); backdrop-filter: blur(12px); }
+.navbar { position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #dbe5dd; background: rgba(255, 255, 255, .96); box-shadow: 0 3px 14px rgba(24, 51, 34, .06); backdrop-filter: blur(12px); overscroll-behavior: none; }
 .navbar-container { display: flex; align-items: center; gap: 1.5rem; max-width: 1200px; min-height: 4.75rem; margin: 0 auto; padding: 0 .5rem; }
 .navbar-brand { display: inline-flex; align-items: center; gap: .65rem; color: #183322; text-decoration: none; }
 .navbar-brand span { display: grid; line-height: 1.1; }
