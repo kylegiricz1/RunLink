@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaTrash } from 'react-icons/fa';
 import WorkoutCard from './WorkoutCard.js'
 import '../styles/workoutList.css';
 

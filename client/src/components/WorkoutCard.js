@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaTrash } from 'react-icons/fa';
 
 import ParticipantsHover from './ParticipantsHover';
-
 import WorkoutMap from './WorkoutMap';
-
+import WorkoutWeather from './WorkoutWeather';
 
 import {
   deleteWorkoutById,
@@ -13,6 +12,8 @@ import {
 } from '../features/workouts/workoutsSlice';
 
 const WorkoutCard = ({ workout, user, runAction, loadingId }) => {
+  const [isWeatherOpen, setIsWeatherOpen] = useState(false);
+
   const isCreator =
     workout.createdBy?._id?.toString() === user?.id?.toString();
 
@@ -24,15 +25,43 @@ const WorkoutCard = ({ workout, user, runAction, loadingId }) => {
   const isLoading = loadingId === workout._id;
 
   return (
-    <li>
+    <li className={isWeatherOpen ? 'has-active-weather' : ''}>
       <div className="workout-header">
-        <p className="workout-date">
-          {new Date(workout.date).toLocaleDateString(undefined, {
-            weekday: 'short',
-            month: 'short',
-            day: 'numeric',
-          })}
-        </p>
+        <div className="workout-top-bar">
+          <div className="top-bar-left">
+            <WorkoutWeather
+              coordinates={workout.location?.coordinates}
+              date={workout.date}
+              onOpenChange={setIsWeatherOpen}
+            />
+          </div>
+
+          <div className="top-bar-center">
+            <p className="workout-date">
+              {new Date(workout.date).toLocaleDateString(undefined, {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric',
+              })}
+            </p>
+          </div>
+
+          <div className="top-bar-right">
+            {isCreator ? (
+              <button
+                type="button"
+                className="card-delete-btn"
+                onClick={() => runAction(deleteWorkoutById, workout._id)}
+                disabled={isLoading}
+                aria-label="Delete this run"
+              >
+                <FaTrash />
+              </button>
+            ) : (
+              <div className="top-bar-spacer" aria-hidden="true" />
+            )}
+          </div>
+        </div>
 
         <h3>{workout.createdBy?.name || 'Community'} run</h3>
       </div>
@@ -54,18 +83,7 @@ const WorkoutCard = ({ workout, user, runAction, loadingId }) => {
         <ParticipantsHover participants={workout.participants} />
       </div>
 
-      {isCreator && (
-        <button
-          className="delete-button"
-          onClick={() => runAction(deleteWorkoutById, workout._id)}
-          disabled={isLoading}
-          aria-label="Delete this run"
-        >
-          <FaTrash />
-        </button>
-      )}
-
-      <div style={{ height: '220px', width: '100%' }} className="my-2">
+      <div style={{ height: '220px', width: '100%', position: 'relative', zIndex: 1 }} className="workout-card-map-wrapper my-2">
         <WorkoutMap workoutId={workout._id} />
       </div>
 
