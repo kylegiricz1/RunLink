@@ -1,32 +1,208 @@
 .map-page {
+  position: fixed;
+  top: 4.75rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: calc(100vh - 4.75rem);
+  overflow: hidden;
+  overscroll-behavior: none;
+  background: #eef2ef;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100%;
-  overflow: hidden;
 }
 
-.map-header {
-  background-color: #216523ae;
-  color: white;
-  padding: 15px;
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-  flex-shrink: 0;
+/* Floating Info Card (Top-Right) */
+.map-overlay-header {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  left: auto;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  border: 1px solid #dbe5dd;
+  border-radius: 0.85rem;
+  padding: 1rem 1.25rem;
+  box-shadow: 0 10px 28px rgba(24, 51, 34, 0.12);
+  max-width: 320px;
+  pointer-events: auto;
+}
+
+.map-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #24733f;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.map-overlay-header h1 {
+  margin: 0;
+  color: #183322;
+  font-size: 1.3rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.map-subtitle {
+  margin: 0.2rem 0 0.6rem;
+  color: #506056;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.map-stats-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #edf5ee;
+  color: #24733f;
+  padding: 0.25rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
 }
 
 .map-container {
   flex: 1;
   width: 100%;
+  height: 100%;
   min-height: 0;
+  position: relative;
+  z-index: 1;
 }
 
-.map-footer {
-  background-color: #333;
-  color: white;
-  padding: 10px;
+/* Leaflet Tooltip Overrides */
+.leaflet-tooltip {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.leaflet-tooltip-top:before {
+  display: none !important;
+}
+
+.map-pin-tooltip {
+  background: #ffffff;
+  border: 1px solid #dbe5dd;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  box-shadow: 0 10px 24px rgba(24, 51, 34, 0.18);
+  min-width: 220px;
+  font-family: inherit;
+}
+
+.pin-tooltip-header {
+  margin-bottom: 0.35rem;
+}
+
+.pin-tooltip-badge {
+  display: inline-block;
+  background: #edf5ee;
+  color: #24733f;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.pin-tooltip-title {
+  margin: 0;
+  color: #183322;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.pin-tooltip-date {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #24733f;
+  font-size: 0.78rem;
+  font-weight: 600;
+  margin-bottom: 0.55rem;
+}
+
+.pin-tooltip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.35rem;
+}
+
+.pin-metric {
+  background: #f7faf8;
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.3rem;
   text-align: center;
-  font-size: 14px;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.pin-metric svg {
+  color: #24733f;
+  font-size: 0.75rem;
+}
+
+.pin-metric small {
+  color: #6b7d72;
+  font-size: 0.65rem;
+}
+
+.pin-metric strong {
+  color: #183322;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+/* Loading State */
+.map-loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: #f8faf8;
+  color: #506056;
+  gap: 0.85rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.map-loading-spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid #dbe5dd;
+  border-top-color: #24733f;
+  border-radius: 50%;
+  animation: mapSpin 0.8s linear infinite;
+}
+
+@keyframes mapSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .map-overlay-header {
+    top: 0.75rem;
+    right: 0.75rem;
+    left: 4.5rem;
+    max-width: none;
+    padding: 0.75rem 1rem;
+  }
 }
