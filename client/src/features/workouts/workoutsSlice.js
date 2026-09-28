@@ -64,7 +64,12 @@ const workoutsSlice = createSlice({
       })
       .addCase(fetchWorkoutById.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.workouts = [action.payload];
+        const index = state.workouts.findIndex(w => w._id === action.payload._id);
+        if (index !== -1) {
+          state.workouts[index] = action.payload;
+        } else {
+          state.workouts.push(action.payload);
+        }
       })
       .addCase(deleteWorkoutById.fulfilled, (state, action) => {
         state.workouts = state.workouts.filter(workout => workout._id !== action.payload);
